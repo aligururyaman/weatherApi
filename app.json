@@ -25,6 +25,19 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "fonts": [
+      {
+        "NunitoRegular": {
+          "asset": "https://fonts.gstatic.com/s/nunito/v16/XRXV3I6Li01BKofINeaB.woff2"
+        },
+        "NunitoBold": {
+          "asset": "https://fonts.gstatic.com/s/nunito/v16/XRXW3I6Li01BKofA-sekZg.woff2"
+        },
+        "NunitoExtraBold": {
+          "asset": "https://fonts.gstatic.com/s/nunito/v16/XRXW3I6Li01BKofIMN9cSBfiPn3t.woff2"
+        }
+      }
+    ]
   }
 }
