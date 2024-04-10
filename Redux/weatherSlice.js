@@ -8,7 +8,7 @@ export const getCityData = createAsyncThunk("getCityData/city", async (obj) => {
         const response = await axios.get(`${hostName}/data/2.5/weather?q=${obj.city}&units=metric&appid=${appId}`);
         return response.data;
     } catch (error) {
-        console.log("haa burda", error);;
+        console.error("haa burda", error);
         
     }
 });

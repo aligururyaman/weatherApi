@@ -1,5 +1,4 @@
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { addRecordedCity } from '../../../Redux/weatherSlice'
 import { useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
@@ -27,6 +26,7 @@ import {
 } from '../../Utils/icons';
 import { useNavigation } from '@react-navigation/native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { MaterialIcons, AntDesign, Octicons  } from '@expo/vector-icons';
 
 export default function Header({ route }) {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -123,7 +123,7 @@ export default function Header({ route }) {
             <Text style={styles.headerCityDate}>{dateString}</Text>
           </View>
           <TouchableOpacity onPress={addRecordCities}>
-            <Icon name="plus" size={40} color="#BFBFD4" />
+            <Octicons name="diff-added" size={34} color="#BFBFD4" />
           </TouchableOpacity>
         </View>
       </View>
@@ -137,14 +137,14 @@ export default function Header({ route }) {
       <View style={styles.iconContainer}>
         <Image source={iconSource} style={styles.icon} />
       </View>
-      <View style={{ position: 'absolute', left: wp('85%'), top: hp('1%') }}>
+      <View style={{ position: 'absolute', left: wp('85%'), top: hp('2%') }}>
         <TouchableOpacity onPress={() => navigation.navigate('Search')}>
-          <Icon name="home" size={40} color="#BFBFD4" />
+          <AntDesign name="home" size={34} color="#BFBFD4" />
         </TouchableOpacity>
       </View>
-      <View style={{ position: 'absolute', left: wp('85%'), top: hp('7%') }}>
+      <View style={{ position: 'absolute', left: wp('85%'), top: hp('8%') }}>
         <TouchableOpacity onPress={showRecordCities}>
-          <Icon name="inbox" size={40} color="#BFBFD4" />
+          <MaterialIcons name="save-alt" size={34} color="#BFBFD4" />
         </TouchableOpacity>
 
       </View>

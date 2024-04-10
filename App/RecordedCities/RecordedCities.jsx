@@ -1,11 +1,11 @@
 import { View, Text, ImageBackground, SafeAreaView, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import mainBg from '../Images/MainImages/backgroundMain.png'
-import Icon from 'react-native-vector-icons/FontAwesome';
 import logo from '../Images/MainImages/Logo.png'
-import { removeRecordedCity, addRecordedCity, getCityData, get5Days } from '../../Redux/weatherSlice';
+import { removeRecordedCity, getCityData, get5Days } from '../../Redux/weatherSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { Ionicons, AntDesign } from '@expo/vector-icons';
 
 
 export default function RecordedCities({ navigation }) {
@@ -14,10 +14,7 @@ export default function RecordedCities({ navigation }) {
 
   const {
     citySearchLoading,
-    citySearchData,
     forecastLoading,
-    forecastData,
-    forecastError
   } = useSelector((state) => state.weather);
 
   const [loadings, setLoadings] = useState(true)
@@ -73,7 +70,7 @@ const goCity = async (city) => {
           <Image source={logo} style={{ left: '10%' }} />
           <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', right: '5%' }}>
             <TouchableOpacity onPress={() => goBack()}>
-              <Icon name="arrow-left" size={30} color="#BFBFD4" />
+              <Ionicons name="arrow-back-circle-outline" size={34} color="#BFBFD4" />
             </TouchableOpacity>
           </View>
         </View>
@@ -83,7 +80,7 @@ const goCity = async (city) => {
               <View style={styles.RecordBox}>
                 <Text style={{ alignSelf: 'center', fontFamily: 'Nunito-Bold', fontSize: hp('3%'), marginLeft: 10, color: '#FAFAFA' }}>{city}</Text>
                 <TouchableOpacity style={{ marginRight: 10, alignSelf: 'center' }} onPress={() => removeCity(city)}>
-                  <Icon name="close" size={30} color="#BFBFD4" />
+                  <AntDesign name="delete" size={34} color="#BFBFD4" />
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>

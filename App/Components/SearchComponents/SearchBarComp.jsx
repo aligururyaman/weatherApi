@@ -1,31 +1,25 @@
-import { View, Text, StyleSheet, TextInput, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { View, Text, StyleSheet, TextInput, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { get5Days, getCityData } from '../../../Redux/weatherSlice';
 import { useState } from 'react';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import * as Location from 'expo-location';
+import { EvilIcons } from '@expo/vector-icons';
 
 const cities = require('../../Data/citiesData.json');
 
-
 export default function SearchBarComp() {
-
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const [query, setQuery] = useState('');
     const [filteredCities, setFilteredCities] = useState([]);
-    const [loadings, setLoadings] = useState();
     const [selectedCity, setSelectedCity] = useState('');
     const [error, setError] = useState('');
     const [showError, setShowError] = useState(false);
+    const [location, setLocation] = useState(null);
 
-    const {
-        citySearchLoading,
-        citySearchData,
-        forecastLoading,
-        forecastData,
-        forecastError
-    } = useSelector((state) => state.weather);
+    const { citySearchLoading, forecastLoading } = useSelector((state) => state.weather);
 
     const showErrorForThreeSeconds = (message) => {
         setError(message);
@@ -37,12 +31,33 @@ export default function SearchBarComp() {
         }, 3000);
     };
 
+    async function getLocationAsync() {
+        const { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+            showErrorForThreeSeconds('Konum erişimi reddedildi.');
+            return;
+        }
+
+        const currentLocation = await Location.getCurrentPositionAsync({});
+        setLocation(currentLocation);
+
+        const address = await Location.reverseGeocodeAsync({
+            latitude: currentLocation.coords.latitude,
+            longitude: currentLocation.coords.longitude,
+        });
+
+        if (address.length > 0) {
+            setQuery(address[0].city);
+            return await fetchData(address[0].city);
+        }
+    }
+
     const handleSearch = (text) => {
         setQuery(text);
         if (text) {
             const filtered = cities.filter(city =>
-                city.cityName && city.cityName.toLowerCase().startsWith(text.toLowerCase()) ||
-                city.cityCountry && city.cityCountry.toLowerCase().startsWith(text.toLowerCase())
+                city.cityName.toLowerCase().startsWith(text.toLowerCase()) ||
+                city.cityCountry.toLowerCase().startsWith(text.toLowerCase())
             );
             setFilteredCities(filtered);
         } else {
@@ -51,15 +66,9 @@ export default function SearchBarComp() {
     };
 
     const handleCitySelection = async (cityName) => {
-        await fetchData(cityName);
         setSelectedCity(cityName);
-
-
-    };
-    const handleOnEndEditing = async () => {
-        if (query) {
-            await fetchData(query);
-        }
+        setQuery(cityName)
+        await fetchData(cityName);
     };
 
     const fetchData = async (city) => {
@@ -67,9 +76,8 @@ export default function SearchBarComp() {
             const cityDataResult = await dispatch(getCityData({ city })).unwrap();
             if (cityDataResult && !cityDataResult.error) {
                 const { lat, lon } = cityDataResult.coord;
-                const foreCastResult = await dispatch(get5Days({ lat, lon })).unwrap();
-                navigation.navigate('Main', { data : cityDataResult, forecastData: foreCastResult });
-                setError('');
+                const forecastResult = await dispatch(get5Days({ lat, lon })).unwrap();
+                navigation.navigate('Main', { data: cityDataResult, forecastData: forecastResult });
             } else {
                 throw new Error('Specified City Not Found. Please Try Again');
             }
@@ -78,11 +86,7 @@ export default function SearchBarComp() {
         }
     };
 
-
-    const ItemSeparator = () => (
-        <View style={styles.separator} />
-    );
-
+    const ItemSeparator = () => <View style={styles.separator} />;
 
     return (
         <View>
@@ -94,13 +98,16 @@ export default function SearchBarComp() {
             <View style={styles.searchContainer}>
                 <TextInput
                     style={styles.searchInput}
-                    placeholder="Search location"
+                    placeholder="Search Location"
                     placeholderTextColor="#7f7f98"
-                    value={loadings ? selectedCity : query}
+                    value={query}
                     onChangeText={handleSearch}
-                    onEndEditing={handleOnEndEditing}
+                    onEndEditing={() => handleCitySelection(query)}
                 />
                 {(citySearchLoading || forecastLoading) && <ActivityIndicator size="small" color="#8FB2F5" />}
+                <TouchableOpacity style={styles.locationIcon} onPress={getLocationAsync}>
+                    <EvilIcons name="location" size={34} color="#BFBFD4" />
+                </TouchableOpacity>
             </View>
             <View style={{ ...styles.flatCon, display: query.length > 0 && filteredCities.length > 0 ? 'flex' : 'none' }}>
                 <FlatList
@@ -116,7 +123,7 @@ export default function SearchBarComp() {
                 />
             </View>
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -134,7 +141,6 @@ const styles = StyleSheet.create({
         marginTop: 8,
         borderRadius: 8,
     },
-
     item: {
         fontSize: hp('2%'),
         height: hp('5%'),
@@ -167,4 +173,7 @@ const styles = StyleSheet.create({
     errorText: {
         color: 'white',
     },
-})
+    locationIcon: {
+        // Stil ayarlamaları yapılabilir
+    }
+});

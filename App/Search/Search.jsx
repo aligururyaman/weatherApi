@@ -3,9 +3,10 @@ import mainBg from '../Images/MainImages/backgroundMain.png'
 import logo from '../Images/MainImages/Logo.png'
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import SearchBarComp from '../Components/SearchComponents/SearchBarComp';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { MaterialIcons } from '@expo/vector-icons';
+
 
 export default function Search() {
     const navigation = useNavigation();
@@ -26,7 +27,7 @@ export default function Search() {
                     </View>
                     <View style={styles.recordPage}>
                         <TouchableOpacity style={styles.recordLink} onPress={() => navigation.navigate('RecordedCities')}>
-                            <Icon name="inbox" size={40} color="#BFBFD4" />
+                            <MaterialIcons name="save-alt" size={34} color="#BFBFD4" />
                         </TouchableOpacity>
                     </View>
                 </View>

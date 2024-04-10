@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "weatherApi",
-    "slug": "weatherApi",
+    "slug": "iweather",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,33 +11,38 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "iWeather wants to know your location"
+        }
+      ]
+    ],
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.aligurur.iweather"
     },
     "android": {
+      "permissions": ["ACCESS_FINE_LOCATION"],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.aligurur.iweather"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "fonts": [
-      {
-        "NunitoRegular": {
-          "asset": "https://fonts.gstatic.com/s/nunito/v16/XRXV3I6Li01BKofINeaB.woff2"
-        },
-        "NunitoBold": {
-          "asset": "https://fonts.gstatic.com/s/nunito/v16/XRXW3I6Li01BKofA-sekZg.woff2"
-        },
-        "NunitoExtraBold": {
-          "asset": "https://fonts.gstatic.com/s/nunito/v16/XRXW3I6Li01BKofIMN9cSBfiPn3t.woff2"
-        }
+    
+    "extra": {
+      "eas": {
+        "projectId": "db94f3b4-6edc-4ae9-b83b-4fca5c0b7298"
       }
-    ]
+    },
+    "owner": "aligurur"
   }
 }
