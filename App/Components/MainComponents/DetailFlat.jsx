@@ -4,14 +4,13 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 
 export default function DetailFlat({ route }) {
 
-  const { data } = route.params;
+  const { data, forecastData } = route.params;
 
   const ListData = [
     { id: '1', icon: require('../../Images/vectors/tempVector.png'), title: 'Thermal sensation', listData: `${Math.round(data.main.temp)}ºc` },
-    { id: '2', icon: require('../../Images/vectors/rainVector.png'), title: 'Probability of rain', listData: `${Math.round(data.main.temp)}` },
+    { id: '2', icon: require('../../Images/vectors/rainVector.png'), title: 'Probability of rain', listData: `${Math.round(forecastData.list[0].pop)}%` },
     { id: '3', icon: require('../../Images/vectors/windVector.png'), title: 'Wind speed', listData: `${Math.round(data.wind.speed)} km/h` },
     { id: '4', icon: require('../../Images/vectors/humidityVector.png'), title: 'Air humidity', listData: `${Math.round(data.main.humidity)}%` },
-    { id: '5', icon: require('../../Images/vectors/UVVector.png'), title: 'UV Index', listData: `${Math.round(data.main.temp)}` },
   ];
 
   return (

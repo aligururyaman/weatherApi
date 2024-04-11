@@ -3,13 +3,12 @@ import axios from "axios";
 import { appId, hostName } from "../App/Utils/config";
 
 
-export const getCityData = createAsyncThunk("getCityData/city", async (obj) => {
+export const getCityData = createAsyncThunk('getCityData', async (obj) => {
     try {
         const response = await axios.get(`${hostName}/data/2.5/weather?q=${obj.city}&units=metric&appid=${appId}`);
         return response.data;
     } catch (error) {
         console.error("haa burda", error);
-        
     }
 });
 
@@ -18,7 +17,10 @@ export const get5Days = createAsyncThunk('get5Days', async (obj) => {
     return response.data;
 });
 
-
+export const getAir = createAsyncThunk('getAir', async (obj) => {
+    const response = await axios.get(`${hostName}/data/2.5/air_pollution?lat=${obj.lat}&lon=${obj.lon}&appid=${appId}`);
+    return response.data
+});
 
 const weatherSlice = createSlice({
     name: 'weather',
@@ -28,7 +30,9 @@ const weatherSlice = createSlice({
         forecastLoading: false,
         forecastData: null,
         forecastError: null,
-        recordedCities: []
+        recordedCities: [],
+        airPollutionData: null,
+        airPollutionLoading: false
     },
     reducers: {
         addRecordedCity(state, action) {
@@ -64,7 +68,15 @@ const weatherSlice = createSlice({
                 state.forecastLoading = false;
                 state.forecastData = null;
                 state.forecastError = action.error.message;
-            });
+            })
+            .addCase(getAir.pending, (state) => {
+                state.airPollutionLoading = true;
+                state.airPollutionData = null;
+            })
+            .addCase(getAir.fulfilled, (state, action) => {
+                state.airPollutionLoading = false;
+                state.airPollutionData = action.payload;
+            })
     }
 });
 

@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TextInput, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { get5Days, getCityData } from '../../../Redux/weatherSlice';
+import { get5Days, getCityData, getAir } from '../../../Redux/weatherSlice';
 import { useState } from 'react';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import * as Location from 'expo-location';
@@ -77,7 +77,9 @@ export default function SearchBarComp() {
             if (cityDataResult && !cityDataResult.error) {
                 const { lat, lon } = cityDataResult.coord;
                 const forecastResult = await dispatch(get5Days({ lat, lon })).unwrap();
-                navigation.navigate('Main', { data: cityDataResult, forecastData: forecastResult });
+                const airPolResult = await dispatch(getAir({ lat, lon })).unwrap();
+                navigation.navigate('Main', { data: cityDataResult, forecastData: forecastResult, airPollutionData: airPolResult });
+                console.log(lat, lon);
             } else {
                 throw new Error('Specified City Not Found. Please Try Again');
             }

@@ -34,7 +34,7 @@ export default function Header({ route }) {
   const dispatch = useDispatch()
   const currentDate = new Date();
 
-  const { data, forecastData } = route.params;
+  const { data } = route.params;
 
   const dateString = currentDate.toLocaleDateString('en-US', {
     weekday: 'long',
