@@ -5,15 +5,11 @@ import React from 'react'
 export default function LeftComp({ route }) {
     const { airPollutionData } = route.params;
     const { components } = airPollutionData.list[0];
-
-
     const componentsArray = Object.entries(components).map(([key, value]) => ({ key, value }));
-
     const groupedComponents = [];
     for (let i = 0; i < componentsArray.length; i += 4) {
         groupedComponents.push(componentsArray.slice(i, i + 4));
     }
-
 
     const getStatus = (value, thresholds) => {
         for (let i = 0; i < thresholds.length; i++) {
@@ -37,8 +33,7 @@ export default function LeftComp({ route }) {
 
 
   return (
-    <View style={styles.container}>
-                       
+    <View style={styles.container}>           
                 {groupedComponents.map((row, rowIndex) => (
                     <View key={rowIndex} style={styles.rowContainer}>
                         {row.map(({ key, value }) => (
@@ -51,7 +46,6 @@ export default function LeftComp({ route }) {
                         ))}
                     </View>
                 ))}
-                
             </View>
   )
 }

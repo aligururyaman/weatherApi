@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { appId, hostName } from "../App/Utils/config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 
 export const getCityData = createAsyncThunk('getCityData', async (obj) => {
@@ -8,7 +10,7 @@ export const getCityData = createAsyncThunk('getCityData', async (obj) => {
         const response = await axios.get(`${hostName}/data/2.5/weather?q=${obj.city}&units=metric&appid=${appId}`);
         return response.data;
     } catch (error) {
-        console.error("haa burda", error);
+        console.error("Specified City Not Found. Please Try Again", error);
     }
 });
 
@@ -20,6 +22,11 @@ export const get5Days = createAsyncThunk('get5Days', async (obj) => {
 export const getAir = createAsyncThunk('getAir', async (obj) => {
     const response = await axios.get(`${hostName}/data/2.5/air_pollution?lat=${obj.lat}&lon=${obj.lon}&appid=${appId}`);
     return response.data
+});
+
+export const loadRecordedCities = createAsyncThunk('weather/loadRecordedCities', async () => {
+    const savedCities = await AsyncStorage.getItem('recordedCities');
+    return savedCities ? JSON.parse(savedCities) : [];
 });
 
 const weatherSlice = createSlice({
@@ -37,11 +44,18 @@ const weatherSlice = createSlice({
     reducers: {
         addRecordedCity(state, action) {
             if (!state.recordedCities.includes(action.payload)) {
-                state.recordedCities.push(action.payload);
+                const newRecordedCities = [...state.recordedCities, action.payload];
+                state.recordedCities = newRecordedCities;
+                AsyncStorage.setItem('recordedCities', JSON.stringify(newRecordedCities));
             }
         },
         removeRecordedCity(state, action) {
-            state.recordedCities = state.recordedCities.filter(city => city !== action.payload);
+            const newRecordedCities = state.recordedCities.filter(city => city !== action.payload);
+            state.recordedCities = newRecordedCities;
+            AsyncStorage.setItem('recordedCities', JSON.stringify(newRecordedCities));
+        },
+        setRecordedCities(state, action) {
+            state.recordedCities = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -77,9 +91,12 @@ const weatherSlice = createSlice({
                 state.airPollutionLoading = false;
                 state.airPollutionData = action.payload;
             })
+            .addCase(loadRecordedCities.fulfilled, (state, action) => {
+                state.recordedCities = action.payload;
+            });
     }
 });
 
 
-export const { addRecordedCity, removeRecordedCity } = weatherSlice.actions;
+export const { addRecordedCity, removeRecordedCity,setRecordedCities } = weatherSlice.actions;
 export const weatherReducer = weatherSlice.reducer;

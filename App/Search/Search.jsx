@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, ImageBackground, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import mainBg from '../Images/MainImages/backgroundMain.png'
 import logo from '../Images/MainImages/Logo.png'
 import { useNavigation } from '@react-navigation/native';
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     recordPage: {
         position: 'absolute',
         height: 70,
-        top: '55%',
+        top: hp('40%'),
         alignItems: 'center',
         justifyContent: 'center',
         left: '20%'

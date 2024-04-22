@@ -33,6 +33,7 @@ export default function Header({ route }) {
   const navigation = useNavigation();
   const dispatch = useDispatch()
   const currentDate = new Date();
+  const [showMessage, setShowMessage] = useState(false);
 
   const { data } = route.params;
 
@@ -42,8 +43,6 @@ export default function Header({ route }) {
     month: 'long',
     day: 'numeric'
   });
-
-
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -61,7 +60,10 @@ export default function Header({ route }) {
 
   const addRecordCities = () => {
     dispatch(addRecordedCity(data.name));
-    navigation.navigate('RecordedCities');
+    setShowMessage(true);
+    setTimeout(() => {
+      setShowMessage(false);
+    }, 2000);
   };
 
   const weatherDescription = data.weather[0].description;
@@ -109,13 +111,20 @@ export default function Header({ route }) {
 
   const showRecordCities = () => {
     navigation.navigate('RecordedCities')
-
   }
 
+  const goBack = () => {
+    navigation.navigate('Search')
+  }
 
   return (
     <View style={styles.container}>
       <Image source={imageBgSource} style={styles.headerImg} />
+      {showMessage && (
+        <View style={styles.messageBox}>
+          <Text style={styles.messageText}>{`${data.name} added successfully!`}</Text>
+        </View>
+      )}
       <View style={styles.headerCityContainer}>
         <View style={styles.headerCity}>
           <View style={{ gap: 2 }}>
@@ -138,7 +147,7 @@ export default function Header({ route }) {
         <Image source={iconSource} style={styles.icon} />
       </View>
       <View style={{ position: 'absolute', left: wp('85%'), top: hp('2%') }}>
-        <TouchableOpacity onPress={() => navigation.navigate('Search')}>
+        <TouchableOpacity onPress={goBack}>
           <AntDesign name="home" size={34} color="#BFBFD4" />
         </TouchableOpacity>
       </View>
@@ -223,5 +232,16 @@ const styles = StyleSheet.create({
   icon: {
 
   },
-
+  messageBox:{
+    position: 'absolute',
+    padding: 12,
+    backgroundColor: '#16161F',
+    borderRadius: 5,
+    top: hp('13%'),
+    alignSelf: 'center',
+  },
+  messageText: {
+    color: '#BFBFD4',
+    fontFamily: "Nunito-Bold"
+  }
 })

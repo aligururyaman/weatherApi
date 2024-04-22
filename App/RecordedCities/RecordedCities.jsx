@@ -2,7 +2,7 @@ import { View, Text, ImageBackground, SafeAreaView, StyleSheet, TouchableOpacity
 import React, { useEffect, useState } from 'react'
 import mainBg from '../Images/MainImages/backgroundMain.png'
 import logo from '../Images/MainImages/Logo.png'
-import { removeRecordedCity, getCityData, get5Days } from '../../Redux/weatherSlice';
+import { removeRecordedCity, getCityData, get5Days, getAir } from '../../Redux/weatherSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { Ionicons, AntDesign } from '@expo/vector-icons';
@@ -30,13 +30,14 @@ export default function RecordedCities({ navigation }) {
       if (cityDataResult && !cityDataResult.error) {
         const { lat, lon } = cityDataResult.coord;
         const forecastResult = await dispatch(get5Days({ lat, lon })).unwrap();
-        return { cityData: cityDataResult, forecastData: forecastResult };
+        const airPolResult = await dispatch(getAir({ lat, lon })).unwrap();
+        return { cityData: cityDataResult, forecastData: forecastResult, airPollutionData: airPolResult };
       } else {
-        console.error('Hava durumu verisi yüklenirken bir hata oluştu');
+        console.error('An error occurred while loading weather data');
         return null;
       }
     } catch (error) {
-      console.error('Veri yükleme işlemi sırasında bir hata meydana geldi:', error);
+      console.error('An error occurred during the data loading process:', error);
       return null;
     }
 };
@@ -47,9 +48,9 @@ const goCity = async (city) => {
     const result = await fetchData(city);
 
     if (result && !result.error) {
-      navigation.navigate('Main', { data: result.cityData, forecastData: result.forecastData });
+      navigation.navigate('Main', { data: result.cityData, forecastData: result.forecastData, airPollutionData:result.airPollutionData });
     } else {
-      console.error('Veri yüklenirken bir hata oluştu');
+      console.error('An error occurred while loading data');
     }
 
     setLoadings(false);

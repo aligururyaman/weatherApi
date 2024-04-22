@@ -1,8 +1,8 @@
-import { View, Text, StyleSheet, TextInput, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { get5Days, getCityData, getAir } from '../../../Redux/weatherSlice';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import * as Location from 'expo-location';
 import { EvilIcons } from '@expo/vector-icons';
@@ -14,12 +14,17 @@ export default function SearchBarComp() {
     const dispatch = useDispatch();
     const [query, setQuery] = useState('');
     const [filteredCities, setFilteredCities] = useState([]);
-    const [selectedCity, setSelectedCity] = useState('');
     const [error, setError] = useState('');
     const [showError, setShowError] = useState(false);
     const [location, setLocation] = useState(null);
 
     const { citySearchLoading, forecastLoading } = useSelector((state) => state.weather);
+
+    useFocusEffect(
+        useCallback(() => {
+          setQuery('');
+        }, [])
+      );
 
     const showErrorForThreeSeconds = (message) => {
         setError(message);
@@ -66,10 +71,13 @@ export default function SearchBarComp() {
     };
 
     const handleCitySelection = async (cityName) => {
-        setSelectedCity(cityName);
-        setQuery(cityName)
+        if (!cityName.trim()) {
+            return;
+        }
+        setQuery(cityName);
         await fetchData(cityName);
     };
+    
 
     const fetchData = async (city) => {
         try {
@@ -79,7 +87,6 @@ export default function SearchBarComp() {
                 const forecastResult = await dispatch(get5Days({ lat, lon })).unwrap();
                 const airPolResult = await dispatch(getAir({ lat, lon })).unwrap();
                 navigation.navigate('Main', { data: cityDataResult, forecastData: forecastResult, airPollutionData: airPolResult });
-                console.log(lat, lon);
             } else {
                 throw new Error('Specified City Not Found. Please Try Again');
             }
@@ -88,7 +95,6 @@ export default function SearchBarComp() {
         }
     };
 
-    const ItemSeparator = () => <View style={styles.separator} />;
 
     return (
         <View>
@@ -104,7 +110,8 @@ export default function SearchBarComp() {
                     placeholderTextColor="#7f7f98"
                     value={query}
                     onChangeText={handleSearch}
-                    onEndEditing={() => handleCitySelection(query)}
+                    keyboardAppearance='dark'
+                    onSubmitEditing={() => handleCitySelection(query)}
                 />
                 {(citySearchLoading || forecastLoading) && <ActivityIndicator size="small" color="#8FB2F5" />}
                 <TouchableOpacity style={styles.locationIcon} onPress={getLocationAsync}>
@@ -112,17 +119,16 @@ export default function SearchBarComp() {
                 </TouchableOpacity>
             </View>
             <View style={{ ...styles.flatCon, display: query.length > 0 && filteredCities.length > 0 ? 'flex' : 'none' }}>
-                <FlatList
-                    style={styles.flatList}
-                    data={filteredCities}
-                    keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ item }) => (
-                        <TouchableOpacity onPress={() => handleCitySelection(item.cityName)}>
-                            <Text style={styles.item}>{item.cityName}, {item.cityCountry}</Text>
-                        </TouchableOpacity>
-                    )}
-                    ItemSeparatorComponent={ItemSeparator}
-                />
+                <View>
+                    {filteredCities.slice(0, Math.min(filteredCities.length, 2)).map((city, index) => (
+                        <View key={index} style={{...styles.resultsContainer, height: filteredCities.length >= 1 ? hp('5.5%') : hp('8%')}}>
+                            <TouchableOpacity onPress={() => handleCitySelection(city.cityName)}>
+                                <Text style={styles.item}>{city.cityName}, {city.cityCountry}</Text>
+                            </TouchableOpacity>
+                            {index < Math.min(filteredCities.length, 2) - 1 && <View style={styles.separator} />}
+                        </View>
+                    ))}
+                </View>
             </View>
         </View>
     );
@@ -138,13 +144,13 @@ const styles = StyleSheet.create({
     },
     flatCon: {
         width: wp('75%'),
-        height: hp('10%'),
         backgroundColor: '#1E1E29',
         marginTop: 8,
         borderRadius: 8,
     },
     item: {
-        fontSize: hp('2%'),
+        fontSize: hp('2.2%'),
+        lineHeight: hp('4%'),
         height: hp('5%'),
         color: '#FAFAFA',
         fontFamily: "Nunito-Bold",
@@ -152,8 +158,8 @@ const styles = StyleSheet.create({
         left: hp('1%')
     },
     separator: {
-        height: 0.5,
-        backgroundColor: '#13131A',
+        height: 1,
+        backgroundColor: '#3B3B54',
         width: '100%',
     },
     searchContainer: {
@@ -168,14 +174,16 @@ const styles = StyleSheet.create({
     },
     errorContainer: {
         position: 'absolute',
-        padding: 10,
+        padding: 12,
         backgroundColor: 'red',
         borderRadius: 5,
+        top: hp('-15%'),
+        alignSelf: 'center',
+
     },
     errorText: {
-        color: 'white',
+        color: '#BFBFD4',
+        fontFamily: "Nunito-Bold"
     },
-    locationIcon: {
-        // Stil ayarlamaları yapılabilir
-    }
+
 });
