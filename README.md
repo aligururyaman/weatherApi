@@ -11,6 +11,8 @@ Projede kullanılan teknolojiler.
 - "axios": "^1.6.8"
 - "react-native-maps": "^1.10.0"
 - "expo-location": "~16.5.5"
+- "react-native-async-storage/async-storage": "^1.23.1"
+- "react-native-responsive-screen": "^1.4.2"
 
 # Start
 
