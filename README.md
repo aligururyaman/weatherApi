@@ -20,25 +20,41 @@ npm start
 
 #Uygulama Resimleri ve Bilgiler
 
-- İlk giriş ekranında bir TextInput ve bir Buton var. TextInput'un yanındaki Location iconuna tıkladığımızda konum bilgisine göre işlem yapıyor. Buton a tıkladığımızda daha önce kaydettiğimiz şehirlerin olduğu sayfaya gidiyor.
+## İlk giriş ekranında bir TextInput ve bir Buton var. TextInput'un yanındaki Location iconuna tıkladığımızda konum bilgisine göre işlem yapıyor. Buton a tıkladığımızda daha önce kaydettiğimiz şehirlerin olduğu sayfaya gidiyor.
+
+
 
 ![](https://lh3.googleusercontent.com/pw/AP1GczNyiaQSUPOXr9nqvSMeZm1mg3Ft1UoclSpIJfl4mCI2JwFCcl_DFau1uUlA-NNJy81mYfjfYVzUm54hqUG2TFjwSWUOjxs63rH5Aoj7pXyqCB1p7IyOIVNqV1bZtODRDiKF4e1SggHTW2ckNhrZ8n6J=w403-h873-s-no-gm?authuser=0)
 
-- İlk girişte inputTextBox a veri girildiği zaman sadece Türkiye'de bulunan şehirlerin önerisi geliyor. Tüm dünya yapacaktım APİ yi kuracak Ücretsiz bir sistem bulamadım. Bulduğum bir data içinde 1,5 milyon şehir vardı programı sıkıntıya sokuyordu... kendim sadece Türkiyedeki şehirleri öneri olarak sundum.
+
+
+## İlk girişte inputTextBox a veri girildiği zaman sadece Türkiye'de bulunan şehirlerin önerisi geliyor. Tüm dünya yapacaktım APİ yi kuracak Ücretsiz bir sistem bulamadım. Bulduğum bir data içinde 1,5 milyon şehir vardı programı sıkıntıya sokuyordu... kendim sadece Türkiyedeki şehirleri öneri olarak sundum.
+
+
 
 ![](https://lh3.googleusercontent.com/pw/AP1GczNzdmqhKD2HI5WpMwCQy6AvEuljX2Y9a5mlXlWAx4-10WcjLsELVprqdyyr-Z2rdt966h6iTjDAA6q2Ym96_JKt0HVMdpFBU-YyHC2ToUJC2EQeP4YaeTVfqawTDgZtcOHLF0eEB_qM8NzXVpCTVRf7=w403-h873-s-no-gm?authuser=0)
 
-- Bu resim ile bir önceki aynı sayılır sadece Loading Spinneri çok güzel yaptım diye göstermek istedim. Çok uyumlu duruyor.Klavye rengini temaya uygun hale getirdim.
+
+
+## Bu resim ile bir önceki aynı sayılır sadece Loading Spinneri çok güzel yaptım diye göstermek istedim. Çok uyumlu duruyor.Klavye rengini temaya uygun hale getirdim.
+
+
 
 ![](https://lh3.googleusercontent.com/pw/AP1GczNbnYhIZNGZINSt9kVvXRRAoZ-iZ7JxcJgqGg-Uyh9CNvyD0BWDM5Qko_jLpH7yqmDaGFiwQ9CAtgfjEh8MTI4tPIEArwHYFK_rOOWD5CD21GD8BLU2H-8aTQ2LBl17eYdTv-dSIXD3EpSYKy-3nfjc=w403-h873-s-no-gm?authuser=0)
 
-- Aranan Şehrin Bilgileri
+
+
+## Aranan Şehrin Bilgileri
+
+
 
 ![](https://lh3.googleusercontent.com/pw/AP1GczNJQGVHnAbblceILQUjIsUTUPKV_mPXjg7uuiLgxnAnGhh0YJ4mwjsOXVs8dOYwL_TJpQhjiMfjS5IQIXjNTSWxFt0w-fzcJ9R_SNd79ILWr8Sa1JGLWdFvmpnM-Agt8HSx2m2YjWOaAZS1ujYw37GF=w403-h873-s-no-gm?authuser=0)
 ![](https://lh3.googleusercontent.com/pw/AP1GczPxyyQAOBg6qTkeDDYWWgdzraGiiPXP7fBN2MlKM8zx68Db5-mKmErOUsDPYH8tI742F3J82TJCBypkq8-cXHc_xJOisQSAvZrdFUgARytSLpNkKXvn5ADN5RO-MiPdojGL6TUHzIHMcCl_zvIhMCN7=w403-h873-s-no-gm?authuser=0)
 
 
-- Bu bölümde Verisi girilen şehire ait bütün bilgiler bulunuyor.
+
+## Bu bölümde Verisi girilen şehire ait bütün bilgiler bulunuyor.
+
 
 - Header Kısmı
   + Girilen şehir ismi.
@@ -77,7 +93,9 @@ npm start
     + Sol kısımda  havadaki değerler üzerinden havanın nasıl olduğu bilgisi veriliyor
     + Sağ kısımda toplam verilerle ortaya çıkan sonucun havaya olan etkisini gösteriyor
    
-- Kayırlar Kısmı
+    
+   
+## Kayıtlar Kısmı
 
 
 ![](https://lh3.googleusercontent.com/pw/AP1GczOCus1sHlbc2T1ltQI-ReksPSwpMJb8vkR1IKCj0l_FMWZfU7idvbWvhU1J8mJ7Jz6XMpSAP8GT1rduUXlb6tLN_kIT3vqCNwwBQbi3JffwvHKXaskUTZ6AyXuVKx-ppswrcKrCei5Uwa62pY9MehxE=w403-h873-s-no-gm?authuser=0)
