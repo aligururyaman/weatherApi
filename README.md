@@ -18,9 +18,9 @@ Projede kullanılan teknolojiler.
 npm start
 ```
 
-#Uygulama Resimleri ve Bilgiler
+# Uygulama Resimleri ve Bilgiler
 
-## İlk giriş ekranında bir TextInput ve bir Buton var. TextInput'un yanındaki Location iconuna tıkladığımızda konum bilgisine göre işlem yapıyor. Buton a tıkladığımızda daha önce kaydettiğimiz şehirlerin olduğu sayfaya gidiyor.
+### İlk giriş ekranında bir TextInput ve bir Buton var. TextInput'un yanındaki Location iconuna tıkladığımızda konum bilgisine göre işlem yapıyor. Buton a tıkladığımızda daha önce kaydettiğimiz şehirlerin olduğu sayfaya gidiyor.
 
 
 
@@ -28,7 +28,7 @@ npm start
 
 
 
-## İlk girişte inputTextBox a veri girildiği zaman sadece Türkiye'de bulunan şehirlerin önerisi geliyor. Tüm dünya yapacaktım APİ yi kuracak Ücretsiz bir sistem bulamadım. Bulduğum bir data içinde 1,5 milyon şehir vardı programı sıkıntıya sokuyordu... kendim sadece Türkiyedeki şehirleri öneri olarak sundum.
+### İlk girişte inputTextBox a veri girildiği zaman sadece Türkiye'de bulunan şehirlerin önerisi geliyor. Tüm dünya yapacaktım APİ yi kuracak Ücretsiz bir sistem bulamadım. Bulduğum bir data içinde 1,5 milyon şehir vardı programı sıkıntıya sokuyordu... kendim sadece Türkiyedeki şehirleri öneri olarak sundum.
 
 
 
@@ -36,7 +36,7 @@ npm start
 
 
 
-## Bu resim ile bir önceki aynı sayılır sadece Loading Spinneri çok güzel yaptım diye göstermek istedim. Çok uyumlu duruyor.Klavye rengini temaya uygun hale getirdim.
+### Bu resim ile bir önceki aynı sayılır sadece Loading Spinneri çok güzel yaptım diye göstermek istedim. Çok uyumlu duruyor.Klavye rengini temaya uygun hale getirdim.
 
 
 
@@ -44,7 +44,7 @@ npm start
 
 
 
-## Aranan Şehrin Bilgileri
+### Aranan Şehrin Bilgileri
 
 
 
@@ -53,7 +53,7 @@ npm start
 
 
 
-## Bu bölümde Verisi girilen şehire ait bütün bilgiler bulunuyor.
+### Bu bölümde Verisi girilen şehire ait bütün bilgiler bulunuyor.
 
 
 - Header Kısmı
